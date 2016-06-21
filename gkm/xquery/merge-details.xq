@@ -19,9 +19,9 @@ declare %updating function gkm:save_last_geokrety_details() {
 let $gks := doc("pending-geokrety-details")/gkxml/geokrety/geokret
 let $countgk := count($gks)
 return (
-  db:output("Merging " || $countgk || " GeoKrety details"),
-  db:output(""),
   if ($countgk > 0) then (
+    db:output("Merging " || $countgk || " GeoKrety details"),
+    db:output(""),
     for $geokret in $gks
       return ( delete node doc("geokrety-details")/gkxml/geokrety/geokret[@id = $geokret/@id] ),
     insert node $gks as last into doc("geokrety-details")/gkxml/geokrety,
