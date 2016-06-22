@@ -26,6 +26,12 @@ if (isset($_GET['gkid'])) {
   $query->bind('lat', round($_GET['lat'], 5), 'xs:string');
   $query->bind('lon', round($_GET['lon'], 5), 'xs:string');
 
+// since modifiedsince
+} else if (isset($_GET['modifiedsince'])) {
+  $query = query($session, 'select-by-date.xq');
+  $query->bind('modifiedsince', strtoupper($_GET['modifiedsince']), 'xs:dateTime');
+
+
 // parse nr
 } else if (isset($_GET['nr'])) {
   $query = query($session, 'select-by-nr.xq');
