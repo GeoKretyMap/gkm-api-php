@@ -310,7 +310,7 @@ let $geokrets := subsequence(doc("pending-geokrety")/gkxml/geokrety/geokret[not(
           "/srv/BaseXData/export/gkdetails/" || $geokret/@id || ".xml",
           <gkxml version="1.0" date="{ current-dateTime() }">
            <geokrety>
-            { $geokret }
+            { $geokret_details }
            </geokrety>
           </gkxml>,
           map { "method": "xml", "cdata-section-elements": "description name owner user waypoint application comment message"}
