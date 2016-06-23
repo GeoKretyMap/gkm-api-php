@@ -24,12 +24,12 @@ RUN apt-get update \
         && mkdir /run/php \
         && ln -s /dev/stderr /var/log/php7.0-fpm.log
 
-ADD fpm/php-fpm.conf /etc/php/7.0/fpm/
-ADD fpm/php.ini /etc/php/7.0/fpm/
-ADD fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/
+COPY fpm/php-fpm.conf /etc/php/7.0/fpm/
+COPY fpm/php.ini /etc/php/7.0/fpm/
+COPY fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/
 
+COPY gkm/* /var/www/html/
 
 EXPOSE 9000
 
-#ENTRYPOINT ["/usr/sbin/php-fpm7.0"]
 CMD ["/usr/sbin/php-fpm7.0", "--nodaemonize", "--fpm-config", "/etc/php/7.0/fpm/php-fpm.conf"]
