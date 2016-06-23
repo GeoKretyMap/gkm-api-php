@@ -28,7 +28,7 @@ COPY fpm/php-fpm.conf /etc/php/7.0/fpm/
 COPY fpm/php.ini /etc/php/7.0/fpm/
 COPY fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/
 
-ADD gkm/* /var/www/html/
+ADD gkm /var/www/html
 
 EXPOSE 9000
 
