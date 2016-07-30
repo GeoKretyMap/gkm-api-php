@@ -18,6 +18,7 @@ RUN apt-get update \
 		ca-certificates \
 		vim \
 		net-tools \
+		git \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \
         && echo "date.timezone = UTC" > /etc/php/php.ini \
