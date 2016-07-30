@@ -55,12 +55,15 @@ function renderJson($session, $query) {
 
 function renderValue($session, $query) {
   try {
+    $value = 0;
     if ($query !== null) {
       header('Content-Type: text/plain; charset=utf-8');
-      echo $query->execute();
+      $value = $query->execute();
+      echo $value;
       $query->close();
     }
     $session->close();
+    return $value;
     
   } catch (Exception $e) {
     die($e->getMessage());
