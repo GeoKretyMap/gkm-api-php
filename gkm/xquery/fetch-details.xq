@@ -228,7 +228,7 @@ declare function gkm:geokrety_details_moves($gkid as xs:string, $pages as xs:int
       { gkm:node_application($move//tr[2]/td[3]/img/@title/string()) }
       <comment>{ $move/tr[3]/td/text() }</comment>
       <logtype id="{ gkm:logtype($move/tr[2]/td[1]/img/@alt) }">{ $move/tr[2]/td[1]/img/@alt/string() }</logtype>
-      { if (empty($distance)) then () else <distancetravelled unit="km">{ functx:get-matches($distance, "\d+")[1] }</distancetravelled> }
+      { if (empty($distance)) then () else <distancetraveled unit="km">{ functx:get-matches($distance, "\d+")[1] }</distancetraveled> }
       { gkm:node_images($move/tr[3]//div[@id = "obrazek_box"]) }
       { let $comments := $move/tr[not(exists(@class))]/td[2] return
       if ($comments) then
@@ -266,7 +266,7 @@ declare function gkm:geokrety_details($geokret as element(geokret)) as element(g
     { gkm:node_owner($tbinfo[1]//a) }
     <datecreated></datecreated>
     <dateupdated>{ current-dateTime() }</dateupdated>
-    <distancetravelled unit="km">{ $geokret/@dist/string() }</distancetravelled>
+    <distancetraveled unit="km">{ $geokret/@dist/string() }</distancetraveled>
     <places>{ $tbinfo[4]//strong/text() }</places>
     <state>{ $geokret/@state/string() }</state>
     { gkm:node_missing($moves) }
