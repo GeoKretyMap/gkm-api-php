@@ -18,10 +18,11 @@ let $lastupdate := format-dateTime(adjust-dateTime-to-timezone($lastupdate, xs:d
 
 (: retrieve updates :)
 let $gks := fetch:xml("https://geokrety.org/export2.php?modifiedsince=" || $lastupdate, map { 'chop': true() })//geokret
+let $null := fetch:text("https://api.geokretymap.org/rrd/update/fetchbasic/" || count($gks))
 
 return (
-  db:output("https://geokrety.org/export2.php?modifiedsince=" || $lastupdate),
-  db:output("Fetch " || count($gks) || " GeoKrety"), db:output(""),
+  db:output($null),
+  db:output(count($gks)), db:output(""),
 
   if (count($gks) > 0) then (
     (: insert new nodes :)

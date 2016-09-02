@@ -59,10 +59,10 @@ function renderValue($session, $query) {
     if ($query !== null) {
       header('Content-Type: text/plain; charset=utf-8');
       $value = $query->execute();
-      echo $value;
       $query->close();
     }
     $session->close();
+    echo $value;
     return $value;
     
   } catch (Exception $e) {

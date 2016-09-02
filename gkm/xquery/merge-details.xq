@@ -18,7 +18,9 @@ declare %updating function gkm:save_last_geokrety_details() {
 
 let $gks := doc("pending-geokrety-details")/gkxml/geokrety/geokret
 let $countgk := count($gks)
+let $null := fetch:text("https://api.geokretymap.org/rrd/update/mergedetails/" || $countgk)
 return (
+  db:output($null),
   if ($countgk > 0) then (
     db:output("Merging " || $countgk || " GeoKrety details"),
     db:output(""),

@@ -289,7 +289,10 @@ declare function gkm:geokrety_details($geokret as element(geokret)) as element(g
 
 (: select 30 geokrety to fetch :)
 let $geokrets := subsequence(doc("pending-geokrety")/gkxml/geokrety/geokret[not(@date)], 1, 30)
+let $null := fetch:text("https://api.geokretymap.org/rrd/update/fetchdetails/" || count($geokrets))
 
+return (
+  db:output($null),
   for $geokret in $geokrets
     return try {
       (: fetch and parse :)
@@ -327,3 +330,4 @@ let $geokrets := subsequence(doc("pending-geokrety")/gkxml/geokrety/geokret[not(
       gkm:mark_geokrety_as_failing($geokret)
     },
   db:output("")
+)

@@ -2,8 +2,6 @@ FROM ubuntu:16.04
 
 MAINTAINER Mathieu Alorent <hub.docker@kumy.net>
 
-ENV DEBIAN_FRONTEND noninteractive
-
 # Install php7-cli
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
@@ -15,6 +13,7 @@ RUN apt-get update \
 		php-mysql \
 		php-json \
 		php-gd \
+		php-rrd \
 		ca-certificates \
 		vim \
 		net-tools \
@@ -23,7 +22,9 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/* \
         && echo "date.timezone = UTC" > /etc/php/php.ini \
         && mkdir /run/php \
-        && ln -s /dev/stderr /var/log/php7.0-fpm.log
+        && ln -s /dev/stderr /var/log/php7.0-fpm.log \
+        && cp /etc/php/mods-available/rrd.ini /etc/php/7.0/mods-available \
+        && phpenmod rrd
 
 COPY fpm/php-fpm.conf /etc/php/7.0/fpm/
 COPY fpm/php.ini /etc/php/7.0/fpm/
