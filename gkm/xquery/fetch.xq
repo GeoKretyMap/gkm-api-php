@@ -14,7 +14,7 @@ declare variable $gkid external;
 let $lastupdate := if (doc("pending-geokrety")/gkxml/@lastupdate)
                    then xs:dateTime(doc("pending-geokrety")/gkxml/@lastupdate)
                    else current-dateTime() - xs:dayTimeDuration("P9DT10M")
-let $lastupdate := format-dateTime(adjust-dateTime-to-timezone($lastupdate, xs:dayTimeDuration('PT2H')), "[Y0001][M01][D01][H01][m01][s01]")
+let $lastupdate := format-dateTime(adjust-dateTime-to-timezone($lastupdate, xs:dayTimeDuration('PT1H')), "[Y0001][M01][D01][H01][m01][s01]")
 
 (: retrieve updates :)
 let $gks := fetch:xml("https://geokrety.org/export2.php?modifiedsince=" || $lastupdate, map { 'chop': true() })//geokret
