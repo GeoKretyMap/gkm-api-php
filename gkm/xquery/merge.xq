@@ -12,7 +12,7 @@ declare %updating function gkm:save_last_geokrety() {
 
 let $gks := doc("pending-geokrety")/gkxml/geokrety/geokret[@date]
 let $countgk := count($gks)
-let $null := fetch:text("https://api.gkm.kumy.org/rrd/update/mergebasic/" || $countgk)
+let $null := fetch:text("https://api.geokretymap.org/rrd/update/mergebasic/" || $countgk)
 return (
   db:output($null),
   if ($countgk > 0) then (

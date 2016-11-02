@@ -68,7 +68,7 @@ declare function gkm:geokrety_details_to_basic($geokrety as element(geokret)*) {
 };
 
 let $last_update := gkm:get_last_geokrety_details()
-let $geokret_details := fetch:xml("https://api.gkm.kumy.org/gk/details/" || $last_update)//geokret
+let $geokret_details := fetch:xml("https://api.geokretymap.org/gk/details/" || $last_update)//geokret
 return
   if (count($geokret_details) > 0) then (
     db:output("fetched details from master: " || count($geokret_details)), db:output(""),
