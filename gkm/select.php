@@ -31,6 +31,11 @@ if (isset($_GET['gkid'])) {
   $query = query($session, 'select-by-date.xq');
   $query->bind('modifiedsince', strtoupper($_GET['modifiedsince']), 'xs:dateTime');
 
+// parse username
+} else if (isset($_GET['username'])) {
+  $query = query($session, 'select-by-username.xq');
+  $query->bind('username', strtoupper($_GET['username']), 'xs:string');
+
 
 // parse nr
 } else if (isset($_GET['nr'])) {
