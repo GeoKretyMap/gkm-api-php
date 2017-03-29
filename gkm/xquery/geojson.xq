@@ -14,7 +14,7 @@ declare variable $daysTo external := 45;
 
 declare variable $newer external := false();
 declare variable $older external := false();
-declare variable $ghosts external := false();
+declare variable $ghosts external := "0";
 declare variable $missing external := "0";
 declare variable $details external := false();
 
@@ -34,7 +34,7 @@ let $filter1 := if ($ownername)
                 then $input[@ownername=$ownername]
                 else $input
 
-let $filter2 := if ($ghosts)
+let $filter2 := if ($ghosts = "1")
                 then $filter1[not(@state="0" or @state="3")]
                 else $filter1[    @state="0" or @state="3" ]
 
