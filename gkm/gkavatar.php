@@ -38,7 +38,7 @@ $font = getcwd() . '/DejaVuSansMono.ttf'; // '/DejaVuSerif.ttf'; // 'arial.ttf';
 imagefill($image, 0, 0, $white);
 
 if (isset($gk->image) && !empty($gk->image)) {
-   $avatarpicture = imagecreatefromjpeg('https://api.geokretymap.org/gkimage/'.$gk->image);
+   $avatarpicture = imagecreatefromstring(file_get_contents('https://api.geokretymap.org/gkimage/'.$gk->image));
    imagecopy($image, $avatarpicture, 100, 100, 0, 0, 100, 100);
 }
 
