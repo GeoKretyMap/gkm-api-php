@@ -21,6 +21,23 @@ function session() {
   }
 }
 
+function execute($session, $query) {
+  try {
+    $xml_string  = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>';
+    $xml_string .= '<gkxml version="1.0" date="'.date('Y-m-d H:i:s').'">';
+    if ($query !== null) {
+      $xml_string .= $query->execute();
+      $query->close();
+    }
+    $session->close();
+    $xml_string .= '</gkxml>';
+    
+    return $xml_string;
+  } catch (Exception $e) {
+    die($e->getMessage());
+  }
+}
+
 function render($session, $query) {
   try {
     $xml_string  = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>';
