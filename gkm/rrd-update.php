@@ -37,5 +37,6 @@ if (! file_exists($rrdFile)) {
 }
 
 $rrd = new RRDUpdater($rrdFile);
-$rrd->update(array($ds => $value), time());
-
+try {
+  $rrd->update(array($ds => $value), time());
+} catch (Exception $e) {}
