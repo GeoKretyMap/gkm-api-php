@@ -13,6 +13,7 @@ if (isset($_GET['details'])) {
   $query = query($session, 'fetch-master.xq');
 } else {
   $query = query($session, 'fetch.xq');
+  $query->bind('bypass', getByPassToken(), 'xs:string');
 }
 
 $count = renderValue($session, $query);

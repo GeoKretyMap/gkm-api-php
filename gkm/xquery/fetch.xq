@@ -9,6 +9,7 @@ xquery version "1.0";
 declare namespace gkm = 'https://geokretymap.org';
 
 declare variable $gkid external;
+declare variable $bypass external;
 
 (: get last update :)
 let $lastupdate := if (doc("pending-geokrety")/gkxml/@lastupdate)
@@ -17,7 +18,7 @@ let $lastupdate := if (doc("pending-geokrety")/gkxml/@lastupdate)
 let $lastupdate := format-dateTime(adjust-dateTime-to-timezone($lastupdate, fn:implicit-timezone()), "[Y0001][M01][D01][H01][m01][s01]")
 
 (: retrieve updates :)
-let $gks := fetch:xml("https://geokrety.org/export2.php?modifiedsince=" || $lastupdate, map { 'chop': true() })//geokret
+let $gks := fetch:xml("https://geokrety.org/export2.php?modifiedsince=" || $lastupdate || '&amp;kocham_kaczynskiego=' || $bypass, map { 'chop': true() })//geokret
 let $null := fetch:text("https://api.geokretymap.org/rrd/update/fetchbasic/" || count($gks))
 
 return (

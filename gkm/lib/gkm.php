@@ -2,6 +2,16 @@
 
 require_once('lib/BaseXClient.php');
 
+function getByPassToken() {
+  try {
+    require('/etc/gkm/config.inc.php');
+    return $BYPASS;
+  } catch (Exception $e) {
+    die($e->getMessage());
+  }
+}
+
+
 function query($session, $file) {
   $query = $session->query(file_get_contents('xquery/' . $file));
 
@@ -14,7 +24,7 @@ function query($session, $file) {
 
 function session() {
   try {
-    require_once('/etc/gkm/config.inc.php');
+    require('/etc/gkm/config.inc.php');
     return new Session($BASEX_HOST, $BASEX_PORT, $BASEX_USERNAME, $BASEX_PASSWORD);
   } catch (Exception $e) {
     die($e->getMessage());
