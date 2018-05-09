@@ -1,5 +1,7 @@
 <?php
 
+putenv("TZ=Europe/Paris");
+
 $rrdFile = "/data/graphs/";
 
 foreach (array("1hour", "1day", "1month", "1year") as $span) {
