@@ -156,7 +156,7 @@ declare %updating function gkm:insert_or_replace_geokrety_details($geokrets as e
 declare function gkm:last_move_date($geokret as element(geokret)?) {
   let $last_move := $geokret/moves/move[functx:is-value-in-sequence(./logtype/@id, (0, 1, 3, 5))][1]/date/@moved
   let $last_move := if ($last_move) then $last_move else string(current-date())
-  let $chunks := tokenize(functx:substring-before-match(functx:substring-before-match($last_move, '\s'), 'Z'), '-')
+  let $chunks := tokenize(functx:substring-before-match(functx:substring-before-match($last_move, '\s'), '\+'), '-')
   return
     functx:date($chunks[1], $chunks[2], $chunks[3])
 };
