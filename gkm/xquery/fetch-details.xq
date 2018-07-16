@@ -253,7 +253,7 @@ declare function gkm:geokrety_details_moves($gkid as xs:string, $pages as xs:int
  : @return The geokrety found
  :)
 declare function gkm:geokrety_details($geokret as element(geokret)) as element(geokret)* {
-  let $page := html:parse(fetch:binary("https://geokrety.org/konkret.php?id=" || $geokret/@id))//div[@id="prawo"]/div
+  let $page := html:parse(fetch:binary("https://geokrety.org/konkret.php?id=" || $geokret/@id))//div[@id="prawo"]
   let $tbinfo := $page/table[1]//tr
   let $tbdetails := $page/table[2]//tr
   let $pages_count := $page/div[2]/strong/a
