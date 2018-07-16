@@ -12,7 +12,6 @@ foreach (array("1hour", "1day", "1month", "1year") as $span) {
         array(
             "--start" => "now -$span",
             "--end" => "now",
-            "--vertical-label" => "$graph/min",
             "DEF:${graph}basic=${rrdFile}${graph}basic.rrd:${graph}basic:AVERAGE",
             "DEF:${graph}details=${rrdFile}${graph}details.rrd:${graph}details:AVERAGE",
             "DEF:${graph}errors=${rrdFile}${graph}errors.rrd:${graph}errors:AVERAGE",
