@@ -10,10 +10,10 @@ if (isset($_GET['details'])) {
 $session = session();
 $query = null;
 
-// parse gkid
+// parse gkid(s)
 if (isset($_GET['gkid'])) {
   $query = query($session, 'select-by-gkid.xq');
-  $query->bind('gkid', $_GET['gkid'], 'xs:string');
+  $query->bind('gkids', $_GET['gkid'], 'xs:string');
 
 // parse waypoints
 } else if (isset($_GET['wpt'])) {

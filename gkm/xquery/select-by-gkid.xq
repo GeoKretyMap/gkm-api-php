@@ -1,6 +1,16 @@
 xquery version "1.0";
 
-declare variable $gkid external;
+declare variable $gkids external;
 declare variable $details external;
+declare variable $limit external := 50;
 
-<geokrety>{ doc("geokrety" || $details)/gkxml/geokrety/geokret[@id=$gkid] }</geokrety>
+let $result := doc("geokrety" || $details)/gkxml/geokrety
+let $gkids_ := subsequence(fn:tokenize($gkids, ','), 1, $limit)
+
+return
+<geokrety>
+{
+  for $gkid in $gkids_
+    return $result/geokret[@id=$gkid]
+}
+</geokrety>
