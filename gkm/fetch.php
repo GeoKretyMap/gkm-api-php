@@ -16,4 +16,5 @@ if (isset($_GET['details']) or in_array('details', $argv)) {
   $query->bind('bypass', getByPassToken(), 'xs:string');
 }
 
+bindApiUrl($query);
 $count = renderValue($session, $query);

@@ -2,6 +2,8 @@ xquery version "1.0";
 
 declare namespace gkm = 'https://geokretymap.org';
 
+declare variable $gkm_api external := "https://api.geokretymap.org";
+
 declare %updating function gkm:save_last_geokrety() {
   let $update := doc('geokrety')/gkxml/@update
   return (
@@ -12,7 +14,7 @@ declare %updating function gkm:save_last_geokrety() {
 
 let $gks := doc("pending-geokrety")/gkxml/geokrety/geokret[@date]
 let $countgk := count($gks)
-let $null := fetch:text("https://api.geokretymap.org/rrd/update/mergebasic/" || $countgk)
+let $null := fetch:text($gkm_api || "/rrd/update/mergebasic/" || $countgk)
 return (
   update:output($null),
   if ($countgk > 0) then (

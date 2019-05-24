@@ -22,6 +22,16 @@ function query($session, $file) {
 }
 
 
+function bindApiUrl($query) {
+  if (!is_null($query) && isset($_ENV['GK_API_URL'])) {
+    $query->bind('gk_api', $_ENV['GK_API_URL'], 'xs:string');
+  }
+  if (!is_null($query) && isset($_ENV['GKM_API_URL'])) {
+    $query->bind('gkm_api', $_ENV['GKM_API_URL'], 'xs:string');
+  }
+}
+
+
 function session() {
   try {
     require('/etc/gkm/config.inc.php');

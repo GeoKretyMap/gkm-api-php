@@ -8,6 +8,9 @@ declare namespace gkm = 'https://geokretymap.org';
 
 import module namespace functx = 'http://www.functx.com';
 
+declare variable $gk_api external := "https://geokrety.org";
+declare variable $gkm_api external := "https://api.geokretymap.org";
+
 (:~
  : Convert type id to string
  : @param $typeid to convert
@@ -211,7 +214,7 @@ declare %updating function gkm:mark_geokrety_as_failing($geokret as element(geok
  : @return The geokrety moves
  :)
 declare function gkm:geokrety_details_moves($gkid as xs:string, $pages as xs:integer, $moves as element()*) as element(move)* {
-  let $gpx := fetch:xml("https://geokrety.org/mapki/gpx/GK-" || $gkid || ".gpx", map { 'intparse': true(), 'stripns': true() })
+  let $gpx := fetch:xml($gk_api || "/mapki/gpx/GK-" || $gkid || ".gpx", map { 'intparse': true(), 'stripns': true() })
 
   for $move in $moves
     let $distance := $move/tr[2]/td[1]/span/string()
@@ -253,7 +256,7 @@ declare function gkm:geokrety_details_moves($gkid as xs:string, $pages as xs:int
  : @return The geokrety found
  :)
 declare function gkm:geokrety_details($geokret as element(geokret)) as element(geokret)* {
-  let $page := html:parse(fetch:binary("https://geokrety.org/konkret.php?id=" || $geokret/@id))//div[@id="prawo"]
+  let $page := html:parse(fetch:binary($gk_api || "/konkret.php?id=" || $geokret/@id))//div[@id="prawo"]
   let $tbinfo := $page/table[1]//tr
   let $tbdetails := $page/table[2]//tr
   let $pages_count := $page/div[2]/strong/a
@@ -289,7 +292,7 @@ declare function gkm:geokrety_details($geokret as element(geokret)) as element(g
 
 (: select 30 geokrety to fetch :)
 let $geokrets := subsequence(doc("pending-geokrety")/gkxml/geokrety/geokret[not(@date)], 1, 100)
-let $null := fetch:text("https://api.geokretymap.org/rrd/update/fetchdetails/" || count($geokrets))
+let $null := fetch:text($gkm_api || "/rrd/update/fetchdetails/" || count($geokrets))
 
 return (
   update:output($null),

@@ -2,6 +2,8 @@ xquery version "1.0";
 
 declare namespace gkm = 'https://geokretymap.org';
 
+declare variable $gkm_api external := "https://api.geokretymap.org";
+
 import module namespace functx = 'http://www.functx.com';
 
 (:~
@@ -68,7 +70,7 @@ declare function gkm:geokrety_details_to_basic($geokrety as element(geokret)*) {
 };
 
 let $last_update := gkm:get_last_geokrety_details()
-let $geokret_details := fetch:xml("https://api.geokretymap.org/gk/details/" || $last_update)//geokret
+let $geokret_details := fetch:xml($gkm_api || "/gk/details/" || $last_update)//geokret
 return
   if (count($geokret_details) > 0) then (
     update:output("fetched details from master: " || count($geokret_details)), update:output(""),
