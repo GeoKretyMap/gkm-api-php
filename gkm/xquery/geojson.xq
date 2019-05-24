@@ -20,6 +20,9 @@ declare variable $details external := false();
 
 declare variable $ownername external := "";
 
+declare variable $gk_api external := "https://geokrety.org";
+declare variable $gkm_api external := "https://api.geokrety.org";
+
 let $year := year-from-date(current-date())
 let $month := month-from-date(current-date())
 let $day := day-from-date(current-date())
@@ -28,7 +31,7 @@ let $today := functx:date($year, $month, $day)
 let $dateFrom := xs:string(current-date() - functx:dayTimeDuration($daysFrom, 0, 0, 0))
 let $dateTo   := xs:string(current-date() - functx:dayTimeDuration($daysTo  , 0, 0, 0))
 
-let $input   := doc("geokrety")/gkxml/geokrety/geokret[@missing=$missing]
+let $input   := doc("geokrety.xml")/gkxml/geokrety/geokret[@missing=$missing]
 
 let $filter1 := if ($ownername)
                 then $input[@ownername=$ownername]
@@ -75,11 +78,11 @@ json:serialize(
         <age>{ string(if ($a/@date) then days-from-duration($today - xs:date(string-join((substring($a/@date, 1, 4), substring($a/@date, 6, 2), substring($a/@date, 9, 2)), '-'))) else '99999') }</age>
 <popupContent>
 {
-'<h1' || (if ($a/@missing = '1') then ' class="missing"' else '') || '><a href="https://geokretymap.org/' || $a/@id || '" target="_blank">' || $a/data() || '</a></h1>' ||
-string(if ($a/@waypoint) then (if ($a/not(@state="0" or @state="3")) then 'Last seen in' else 'In') || ' <a href="https://geokrety.org/go2geo/index.php?wpt=' || $a/@waypoint || '" target="_blank">' || $a/@waypoint || '</a><br />' else '') ||
+'<h1' || (if ($a/@missing = '1') then ' class="missing"' else '') || '><a href="' || $gk_api || '/konkret.php?id=' || $a/@id || '" target="_blank">' || $a/data() || '</a></h1>' ||
+string(if ($a/@waypoint) then (if ($a/not(@state="0" or @state="3")) then 'Last seen in' else 'In') || ' <a href="' || $gk_api || '/go2geo/index.php?wpt=' || $a/@waypoint || '" target="_blank">' || $a/@waypoint || '</a><br />' else '') ||
 string(if ($a/@date) then 'Last move: ' || $a/@date || '<br />' else '') ||
-'Travelled: ' || $a/@dist || ' km<br />' || (if ($a/@ownername) then 'Owner: <a href="https://geokrety.org/mypage.php?userid=' || $a/@owner_id || '" target="_blank">' || $a/@ownername || '</a><br />' else '') ||
-string(if ($a/@image) then '<img src="https://geokretymap.org/gkimage/' || $a/@image || '" width="100" />' else '')
+'Travelled: ' || $a/@dist || ' km<br />' || (if ($a/@ownername) then 'Owner: <a href="' || $gk_api || '/mypage.php?userid=' || $a/@owner_id || '" target="_blank">' || $a/@ownername || '</a><br />' else '') ||
+string(if ($a/@image) then '<img src="' || $gkm_api || '/gkimage/' || $a/@image || '" width="100" />' else '')
 }
 </popupContent>
       </properties>

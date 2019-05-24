@@ -2,10 +2,10 @@ xquery version "1.0";
 
 declare variable $gkm_api external := "https://api.geokretymap.org";
 
-let $fetch := count(doc("pending-geokrety")/gkxml/geokrety/geokret[not(@date)])
-let $merge := count(doc("pending-geokrety")/gkxml/geokrety/geokret[@date])
-let $errors := count(doc("pending-geokrety")/gkxml/errors/geokret)
-let $details := count(doc("pending-geokrety-details")/gkxml/geokrety/geokret)
+let $fetch := count(doc("pending-geokrety.xml")/gkxml/geokrety/geokret[not(@date)])
+let $merge := count(doc("pending-geokrety.xml")/gkxml/geokrety/geokret[@date])
+let $errors := count(doc("pending-geokrety.xml")/gkxml/errors/geokret)
+let $details := count(doc("pending-geokrety-details.xml")/gkxml/geokrety/geokret)
 
 return
 (

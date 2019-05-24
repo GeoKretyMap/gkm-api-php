@@ -12,7 +12,7 @@ import module namespace functx = 'http://www.functx.com';
  : @return The modifiedsince value
  :)
 declare function gkm:get_last_geokrety_details() {
-  let $lastupdate := doc('geokrety-details')/gkxml/@lastupdate
+  let $lastupdate := doc('geokrety-details.xml')/gkxml/@lastupdate
   return
     if ($lastupdate) then xs:dateTime($lastupdate)
     else current-dateTime() - xs:dayTimeDuration("P50D")
@@ -22,10 +22,10 @@ declare function gkm:get_last_geokrety_details() {
  : Save last full database upgrade date
  :)
 declare %updating function gkm:save_last_geokrety_details() {
-  let $lastupdate := doc('geokrety-details')/gkxml/@lastupdate
+  let $lastupdate := doc('geokrety-details.xml')/gkxml/@lastupdate
   return
     if ($lastupdate) then replace value of node $lastupdate with current-dateTime()
-    else insert node (attribute lastupdate { current-dateTime() }) as last into doc('geokrety-details')/gkxml
+    else insert node (attribute lastupdate { current-dateTime() }) as last into doc('geokrety-details.xml')/gkxml
 };
 
 (:~
@@ -75,8 +75,8 @@ return
   if (count($geokret_details) > 0) then (
     update:output("fetched details from master: " || count($geokret_details)), update:output(""),
 
-    insert node $geokret_details as last into doc('pending-geokrety-details')/gkxml/geokrety,
-    insert node gkm:geokrety_details_to_basic($geokret_details) as last into doc('pending-geokrety')/gkxml/geokrety
+    insert node $geokret_details as last into doc('pending-geokrety-details.xml')/gkxml/geokrety,
+    insert node gkm:geokrety_details_to_basic($geokret_details) as last into doc('pending-geokrety.xml')/gkxml/geokrety
   ) else (
     update:output("No new geokrety since " || $last_update)
   ),

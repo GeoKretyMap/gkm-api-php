@@ -18,6 +18,7 @@ function query($session, $file) {
   if (isset($_GET['limit'])) {
     $query->bind('limit', $_GET['limit'], 'xs:integer');
   }
+  bindApiUrl($query);
   return $query;
 }
 

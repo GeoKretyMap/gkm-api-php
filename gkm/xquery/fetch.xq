@@ -14,8 +14,8 @@ declare variable $gk_api external := "https://geokrety.org";
 declare variable $gkm_api external := "https://api.geokretymap.org";
 
 (: get last update :)
-let $lastupdate := if (doc("pending-geokrety")/gkxml/@lastupdate)
-                   then xs:dateTime(doc("pending-geokrety")/gkxml/@lastupdate)
+let $lastupdate := if (doc("pending-geokrety.xml")/gkxml/@lastupdate)
+                   then xs:dateTime(doc("pending-geokrety.xml")/gkxml/@lastupdate)
                    else current-dateTime() - xs:dayTimeDuration("P9DT10M")
 let $lastupdate := format-dateTime(adjust-dateTime-to-timezone($lastupdate, xs:dayTimeDuration('PT2H')), "[Y0001][M01][D01][H01][m01][s01]")
 
@@ -28,13 +28,13 @@ return (
 
   if (count($gks) > 0) then (
     (: insert new nodes :)
-    insert node $gks as last into doc("pending-geokrety")/gkxml/geokrety,
+    insert node $gks as last into doc("pending-geokrety.xml")/gkxml/geokrety,
 
     (: save last update :)
-    if (doc("pending-geokrety")/gkxml/@lastupdate)
-    then replace value of node doc("pending-geokrety")/gkxml/@lastupdate with current-dateTime()
-    else insert node (attribute lastupdate { current-dateTime() }) as last into doc("pending-geokrety")/gkxml,
-    db:optimize('pending-geokrety', true())
+    if (doc("pending-geokrety.xml")/gkxml/@lastupdate)
+    then replace value of node doc("pending-geokrety.xml")/gkxml/@lastupdate with current-dateTime()
+    else insert node (attribute lastupdate { current-dateTime() }) as last into doc("pending-geokrety.xml")/gkxml,
+    db:optimize('pending-geokrety.xml', true())
 
   ) else ()
 )

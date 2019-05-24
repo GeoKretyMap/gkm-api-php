@@ -147,8 +147,8 @@ declare function gkm:node_images($images) {
 declare %updating function gkm:insert_or_replace_geokrety_details($geokrets as element(geokret)*) {
   for $geokret in $geokrets
     return (
-      delete node doc("pending-geokrety-details")/gkxml/geokrety/geokret[@id = $geokret/@id],
-      insert node $geokret as last into doc("pending-geokrety-details")/gkxml/geokrety
+      delete node doc("pending-geokrety-details.xml")/gkxml/geokrety/geokret[@id = $geokret/@id],
+      insert node $geokret as last into doc("pending-geokrety-details.xml")/gkxml/geokrety
     )
 };
 
@@ -199,11 +199,11 @@ declare %updating function gkm:update_ownername_in_geokrety($geokret as element(
  : @param $geokret to process
  :)
 declare %updating function gkm:mark_geokrety_as_failing($geokret as element(geokret)) {
-   if (not(doc('pending-geokrety')/gkxml/errors)) then (
-     insert node <errors>{ $geokret }</errors> as last into doc('pending-geokrety')/gkxml,
+   if (not(doc('pending-geokrety.xml')/gkxml/errors)) then (
+     insert node <errors>{ $geokret }</errors> as last into doc('pending-geokrety.xml')/gkxml,
      delete node $geokret
    ) else (
-     insert node $geokret as last into doc('pending-geokrety')/gkxml/errors,
+     insert node $geokret as last into doc('pending-geokrety.xml')/gkxml/errors,
      delete node $geokret
    )
 };
@@ -291,7 +291,7 @@ declare function gkm:geokrety_details($geokret as element(geokret)) as element(g
 
 
 (: select 30 geokrety to fetch :)
-let $geokrets := subsequence(doc("pending-geokrety")/gkxml/geokrety/geokret[not(@date)], 1, 100)
+let $geokrets := subsequence(doc("pending-geokrety.xml")/gkxml/geokrety/geokret[not(@date)], 1, 100)
 let $null := fetch:text($gkm_api || "/rrd/update/fetchdetails/" || count($geokrets))
 
 return (

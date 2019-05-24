@@ -31,7 +31,6 @@ if ($details) {
   #$counter_call->increment( [ 'details' => $details ], 1 );
 }
 
-bindApiUrl($query);
 $value = renderValue($session, $query);
 #$counter_update->increment( [ 'details' => $details ], $value );
 #$client->pushMetrics( "gkm", "merge" );

@@ -11,5 +11,4 @@ if (isset($_GET['gkid'])) {
   $query->bind('gkid', $_GET['gkid'], 'xs:string');
 }
 
-bindApiUrl($query);
 renderValue($session, $query);
