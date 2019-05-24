@@ -71,11 +71,11 @@ let $last_update := gkm:get_last_geokrety_details()
 let $geokret_details := fetch:xml("https://api.geokretymap.org/gk/details/" || $last_update)//geokret
 return
   if (count($geokret_details) > 0) then (
-    db:output("fetched details from master: " || count($geokret_details)), db:output(""),
+    update:output("fetched details from master: " || count($geokret_details)), update:output(""),
 
     insert node $geokret_details as last into doc('pending-geokrety-details')/gkxml/geokrety,
     insert node gkm:geokrety_details_to_basic($geokret_details) as last into doc('pending-geokrety')/gkxml/geokrety
   ) else (
-    db:output("No new geokrety since " || $last_update)
+    update:output("No new geokrety since " || $last_update)
   ),
   gkm:save_last_geokrety_details()

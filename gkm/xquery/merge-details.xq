@@ -20,10 +20,10 @@ let $gks := doc("pending-geokrety-details")/gkxml/geokrety/geokret
 let $countgk := count($gks)
 let $null := fetch:text("https://api.geokretymap.org/rrd/update/mergedetails/" || $countgk)
 return (
-  db:output($null),
+  update:output($null),
   if ($countgk > 0) then (
-    db:output("Merging " || $countgk || " GeoKrety details"),
-    db:output(""),
+    update:output("Merging " || $countgk || " GeoKrety details"),
+    update:output(""),
     for $geokret in $gks
       return ( delete node doc("geokrety-details")/gkxml/geokrety/geokret[@id = $geokret/@id] ),
     insert node $gks as last into doc("geokrety-details")/gkxml/geokrety,

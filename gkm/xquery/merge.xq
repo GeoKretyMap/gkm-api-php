@@ -14,10 +14,10 @@ let $gks := doc("pending-geokrety")/gkxml/geokrety/geokret[@date]
 let $countgk := count($gks)
 let $null := fetch:text("https://api.geokretymap.org/rrd/update/mergebasic/" || $countgk)
 return (
-  db:output($null),
+  update:output($null),
   if ($countgk > 0) then (
-    db:output("Merging " || $countgk || " GeoKrety"),
-    db:output(""),
+    update:output("Merging " || $countgk || " GeoKrety"),
+    update:output(""),
     insert node $gks as last into doc("geokrety")/gkxml/geokrety,
     for $geokret in $gks
       return ( delete node doc("geokrety")/gkxml/geokrety/geokret[@id = $geokret/@id] ),

@@ -292,7 +292,7 @@ let $geokrets := subsequence(doc("pending-geokrety")/gkxml/geokrety/geokret[not(
 let $null := fetch:text("https://api.geokretymap.org/rrd/update/fetchdetails/" || count($geokrets))
 
 return (
-  db:output($null),
+  update:output($null),
   for $geokret in $geokrets
     return try {
       (: fetch and parse :)
@@ -303,7 +303,7 @@ return (
       let $missing := $geokret_details/missing
       let $ownername := $geokret_details/owner/string()
       return (
-        db:output("fetched: " || $geokret/@id || " -> " || $geokret_details/@id),
+        update:output("fetched: " || $geokret/@id || " -> " || $geokret_details/@id),
     
         (: save gk details in pending database :)
         gkm:insert_or_replace_geokrety_details($geokret_details),
@@ -325,9 +325,9 @@ return (
         gkm:update_ownername_in_geokrety($geokret, $ownername)
       )
     } catch * {
-      db:output('Line: ' || $err:line-number || ',' || $err:column-number || ' ; Error [' || $err:code || ']: ' || $err:description),
-      db:output("Mark as failing: " || $geokret/@id),
+      update:output('Line: ' || $err:line-number || ',' || $err:column-number || ' ; Error [' || $err:code || ']: ' || $err:description),
+      update:output("Mark as failing: " || $geokret/@id),
       gkm:mark_geokrety_as_failing($geokret)
     },
-  db:output("")
+  update:output("")
 )

@@ -22,7 +22,7 @@ let $gks := fetch:xml("https://geokrety.org/export2.php?modifiedsince=" || $last
 let $null := fetch:text("https://api.geokretymap.org/rrd/update/fetchbasic/" || count($gks))
 
 return (
-  db:output($null), db:output(count($gks)), db:output($lastupdate),
+  update:output($null), update:output(count($gks)), update:output($lastupdate),
 
   if (count($gks) > 0) then (
     (: insert new nodes :)
