@@ -17,7 +17,7 @@ declare variable $gkm_api external := "https://api.geokretymap.org";
 let $lastupdate := if (doc("pending-geokrety.xml")/gkxml/@lastupdate)
                    then xs:dateTime(doc("pending-geokrety.xml")/gkxml/@lastupdate)
                    else current-dateTime() - xs:dayTimeDuration("P9DT10M")
-(:let $lastupdate := format-dateTime(adjust-dateTime-to-timezone($lastupdate, xs:dayTimeDuration('PT2H')), "[Y0001][M01][D01][H01][m01][s01]"):)
+let $lastupdate := format-dateTime($lastupdate, "[Y0001][M01][D01][H01][m01][s01]")
 
 (: retrieve updates :)
 let $gks := fetch:xml($gk_api || "/export2.php?modifiedsince=" || $lastupdate || '&amp;kocham_kaczynskiego=' || $bypass, map { 'chop': true() })//geokret
