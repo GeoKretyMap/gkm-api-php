@@ -219,7 +219,7 @@ declare function gkm:geokrety_details_moves($gkid as xs:string, $pages as xs:int
   for $move in $moves
     let $distance := $move/tr[2]/td[1]/span/string()
     let $moveDate := tokenize($move/tr[2]/td[3]/text()[1], " / ")[1]
-    let $gpxmove := util:last-from($gpx/gpx/wpt[fn:starts-with(./time, $moveDate) and ./name = $move/tr[2]/td[2]/span/a/string()])
+    let $gpxmove := util:last($gpx/gpx/wpt[fn:starts-with(./time, $moveDate) and ./name = $move/tr[2]/td[2]/span/a/string()])
 
     return
     <move>
